@@ -1,0 +1,29 @@
+[project]
+name = "hurricane-forecasts"
+version = "0.1.0"
+requires-python = "==3.12.*"
+dependencies = [
+    "earth2studio[aifs,cyclone,data,fcn3]",
+    "torch>=2.4.0",
+    "torch-harmonics>=0.8.0",
+    "xarray>=2024.1.0",
+    "zarr>=2.18.0",
+    "gcsfs>=2024.1.0",
+    "h5py>=3.11.0",
+    "matplotlib>=3.8.1",
+    "cartopy>=0.22.0",
+    "numpy>=1.22.4",
+    "tqdm>=4.60.0",
+    "pandas>=2.0.0",
+    "nvidia-ml-py",
+]
+
+[dependency-groups]
+dev = ["ipykernel>=7.1.0"]
+
+[tool.uv.sources]
+earth2studio = { git = "https://github.com/NVIDIA/earth2studio.git" }
+
+[tool.uv]
+extra-build-dependencies = ["setuptools"]
+index-url = "https://pypi.nvidia.com"
