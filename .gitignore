@@ -5,3 +5,4 @@ outputs/
 *.zarr
 *.pt
 .DS_Store
+cufile.log

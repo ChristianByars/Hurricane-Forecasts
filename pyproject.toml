@@ -3,7 +3,7 @@ name = "hurricane-forecasts"
 version = "0.1.0"
 requires-python = "==3.12.*"
 dependencies = [
-    "earth2studio[aifs,cyclone,data,fcn3]",
+    "earth2studio[aifs,cyclone,data,fcn3,graphcast]",
     "torch>=2.4.0",
     "torch-harmonics>=0.8.0",
     "xarray>=2024.1.0",
@@ -23,10 +23,16 @@ dev = ["ipykernel>=7.1.0"]
 
 [tool.uv.sources]
 earth2studio = { git = "https://github.com/NVIDIA/earth2studio.git" }
+torch = { index = "pytorch-cu124" }
 
 [tool.uv]
-override-dependencies = ["torch-harmonics==0.8.1"]
+override-dependencies = ["torch-harmonics==0.8.1", "warp-lang<1.13"]
 index-strategy = "unsafe-best-match"
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
 
 [[tool.uv.index]]
 url = "https://pypi.nvidia.com"
