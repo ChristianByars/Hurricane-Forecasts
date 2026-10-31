@@ -11,4 +11,4 @@ cufile.log
 .run/
 *.pre-cleanup/
 *.failed-*/
-wheels/
+wheels
