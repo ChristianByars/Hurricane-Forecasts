@@ -1,41 +1,43 @@
 [project]
 name = "hurricane-forecasts"
 version = "0.1.0"
+description = "AI weather-model tropical-cyclone track and intensity forecasts for Hurricane Helene (2024), verified against ERA5, with NVIDIA Earth2Studio"
+readme = "README.md"
 requires-python = "==3.12.*"
+authors = [{ name = "Christian Byars" }]
 dependencies = [
-    "earth2studio[aifs2,data,fcn3,aurora]",
-    "torch>=2.13.0",
-    "torch-harmonics>=0.8.0",
-    "xarray>=2024.1.0",
-    "zarr>=2.18.0",
-    "gcsfs>=2024.1.0",
-    "h5py>=3.11.0",
-    "matplotlib>=3.8.1",
+    "earth2studio[aifs2,aurora,cyclone,data,sfno]==0.20.0",
+    "torch==2.13.0",
     "cartopy>=0.22.0",
-    "numpy>=1.22.4",
-    "scipy>=1.10.0",
-    "tqdm>=4.60.0",
-    "pandas>=2.0.0",
+    "gcsfs>=2024.1.0",
+    "makani",  # not on PyPI: resolved from [tool.uv.sources] (earth2studio[sfno] needs it; uv ignores a dependency's sources)
+    "matplotlib>=3.8.1",
+    "numpy>=1.26",
     "nvidia-ml-py",
+    "pandas>=2.0.0",
+    "pytest>=9.0.3",  # cupy.testing import guard: importing cupy without pytest crashes
+    "scipy>=1.10.0",
+    "xarray>=2024.10.0",
+    "zarr>=2.18.0",
 ]
 
 [dependency-groups]
-dev = ["ipykernel>=7.1.0"]
+dev = ["ipykernel>=7.1.0", "nbconvert>=7.16.0"]
 
 [tool.uv.sources]
-earth2studio = { git = "https://github.com/NVIDIA/earth2studio.git", rev = "main" }
 torch = { index = "pytorch-cu132" }
+makani = { git = "https://github.com/NVIDIA/makani.git", rev = "b38fcb2799d7dbc146fa60459f3f9823394a8bf1" }  # same pin as earth2studio 0.20.0
+flash-attn = { path = "wheels/flash_attn-2.8.3-cp312-cp312-linux_x86_64.whl" }
+torch-harmonics = { path = "wheels/torch_harmonics-0.8.1-cp312-cp312-linux_x86_64.whl" }
 
 [tool.uv]
-# Pin flash-attn to the version rebuilt (no-build-isolation) against torch 2.13.0+cu132.
-# torch-harmonics/warp overrides as before.
-override-dependencies = ["torch-harmonics==0.8.1", "warp-lang<1.13", "flash-attn==2.8.3"]
 index-strategy = "unsafe-best-match"
+override-dependencies = ["torch-harmonics==0.8.1", "flash-attn==2.8.3"]
+no-build-isolation-package = ["torch-harmonics", "flash-attn"]
 
-# Safety net: if flash-attn is ever rebuilt from source, give its isolated build env torch
-# (its setup.py imports torch but doesn't declare it as a build dependency).
 [tool.uv.extra-build-dependencies]
 flash-attn = ["torch", "packaging", "ninja"]
+torch-harmonics = ["torch"]
 
 [[tool.uv.index]]
 name = "pytorch-cu132"
@@ -45,3 +47,7 @@ explicit = true
 [[tool.uv.index]]
 url = "https://pypi.nvidia.com"
 priority = "supplemental"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
