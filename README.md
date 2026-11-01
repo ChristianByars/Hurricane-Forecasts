@@ -1,8 +1,8 @@
 # Hurricane Helene — AI Weather Model Track & Intensity Verification
 
-![Helene 72-hour forecast tracks from AIFS2, SFNO and Aurora compared with the ERA5 track](docs/images/helene_track_72h.png)
+![Helene 72-hour forecast tracks from GraphCast, SFNO and Aurora compared with the ERA5 track](docs/images/helene_track_72h.png)
 
-Three AI weather models — ECMWF's AIFS2, NVIDIA's SFNO and Microsoft's Aurora — forecast Hurricane Helene (Florida Big Bend landfall, 2024-09-27) three days ahead. Storm tracks and intensities are extracted from the model fields and scored against ERA5, using [NVIDIA Earth2Studio](https://github.com/NVIDIA/earth2studio).
+Three AI weather models — Google DeepMind's GraphCast (operational version), NVIDIA's SFNO and Microsoft's Aurora — forecast Hurricane Helene (Florida Big Bend landfall, 2024-09-27) three days ahead, all started from the same ERA5 state. Storm tracks and intensities are extracted from the model fields and scored against ERA5, using [NVIDIA Earth2Studio](https://github.com/NVIDIA/earth2studio).
 
 ## Results at a glance
 
@@ -42,10 +42,12 @@ _Filled in after the verified run._
 
 | Model | Developer | Initial condition | Tracker |
 |---|---|---|---|
-| AIFS2 | ECMWF | IFS analysis (ECMWF open data) | vorticity + MSLP |
+| GraphCast (operational) | Google DeepMind | ERA5 (ARCO), same initial state as the other models | vorticity + MSLP |
 | SFNO | NVIDIA | ERA5 (ARCO) | both trackers |
 | Aurora | Microsoft | ERA5 (ARCO) | both trackers |
 | ERA5 | ECMWF reanalysis | — | reference (tracked by both trackers) |
+
+Earth2Studio asks users to familiarize themselves with the licence restrictions of the GraphCast checkpoints before using them; see the [WeatherNext repository](https://github.com/google-deepmind/weathernext) (where GraphCast is called WeatherNext 1-Graph), the [arXiv paper](https://arxiv.org/abs/2212.12794) and the [Science paper](https://www.science.org/doi/10.1126/science.adi2336).
 
 ## Quick start
 
@@ -58,7 +60,7 @@ uv sync
 uv run python -m ipykernel install --user --name hurricane-forecasts --display-name "hurricane-forecasts"
 ```
 
-`uv sync` expects two prebuilt wheels (flash-attn and torch-harmonics) in a `wheels/` folder; see [docs/environment.md](docs/environment.md).
+`uv sync` expects a prebuilt torch-harmonics wheel in a `wheels/` folder; see [docs/environment.md](docs/environment.md).
 
 Open a notebook in JupyterLab and select the **hurricane-forecasts** kernel, then run all cells.
 
@@ -70,13 +72,13 @@ _Runtime and GPU memory are filled in after the verified run._
 
 | Notebook | Tracker | Models |
 |---|---|---|
-| `helene_forecast_comparison.ipynb` | Vorticity center and minimum MSLP | AIFS2, SFNO, Aurora |
+| `helene_forecast_comparison.ipynb` | Vorticity center and minimum MSLP | GraphCast, SFNO, Aurora |
 | `helene_forecast_comparison_wuduan.ipynb` | Wu–Duan tracker (`TCTrackerWuDuan`) | SFNO, Aurora |
 
 ## Repository layout
 
 ```text
-helene_forecast_comparison.ipynb         vorticity/MSLP tracker: AIFS2, SFNO, Aurora
+helene_forecast_comparison.ipynb         vorticity/MSLP tracker: GraphCast, SFNO, Aurora
 helene_forecast_comparison_wuduan.ipynb  Wu–Duan tracker: SFNO, Aurora
 metrics.py                               great-circle distance and intensity-error helpers
 tc_skill.py                              track and lead-hour skill tables
