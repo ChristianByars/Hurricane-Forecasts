@@ -37,6 +37,10 @@ Position error is the great-circle distance between a model's storm center and t
 
 Leads before the tracker first detects Helene in ERA5 are not scored, which is why the lead-hour table starts at 24 h.
 
+![Helene: SFNO and Aurora MSLP error against ERA5 by forecast lead hour](docs/images/helene_wuduan_mslp_error.png)
+
+*MSLP error against ERA5 by lead time. A positive value means the model's storm is weaker than ERA5's; both models are weaker at every lead.*
+
 ## Models and data
 
 | Model | Developer | Initial condition |
