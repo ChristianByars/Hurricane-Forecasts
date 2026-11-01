@@ -1,4 +1,4 @@
-"""Track and intensity skill tables for tropical-cyclone forecasts (used by the Helene notebooks)."""
+"""Track and intensity skill tables for tropical-cyclone forecasts (used by the Helene notebook)."""
 from __future__ import annotations
 
 import numpy as np

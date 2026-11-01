@@ -8,9 +8,9 @@ Two AI weather models — NVIDIA's SFNO and Microsoft's Aurora — forecast Hurr
 
 ## Results at a glance
 
-Position error is the great-circle distance between a model's storm center and the ERA5 storm center. MSLP error is the model's minimum mean sea level pressure minus ERA5's, so a positive MSLP bias means the model's storm is shallower than ERA5's. ERA5 is a 0.25° reanalysis that smooths storm cores, so intensity errors measure agreement with ERA5, not with best-track pressure.
+Position error is the great-circle distance between a model's storm center and the ERA5 storm center. MSLP error is the model's minimum mean sea level pressure inside the tracker's storm box minus ERA5's, so a positive MSLP bias means the model's storm is shallower than ERA5's. ERA5 is a 0.25° reanalysis that smooths storm cores, so intensity errors measure agreement with ERA5, not with best-track pressure.
 
-**Mean errors over the 72 h forecast**
+**Mean errors over the scored leads (24–72 h)**
 
 <!-- helene_forecast_comparison_wuduan_metrics:START -->
 | Model | Position error, mean (km) | Position error, max (km) | MSLP bias (hPa) | MSLP RMSE (hPa) |
@@ -78,11 +78,11 @@ Open `helene_forecast_comparison_wuduan.ipynb` in JupyterLab and select the **hu
 
 ```text
 helene_forecast_comparison_wuduan.ipynb  Wu–Duan tracker: SFNO and Aurora against ERA5
-metrics.py                               great-circle distance and intensity-error helpers
+metrics.py                               great-circle distance, intensity error and area-weighted grid metrics
 tc_skill.py                              track and lead-hour skill tables
 tests/                                   unit tests for metrics.py and tc_skill.py
 docs/images/                             figures shown in this README
-docs/results/                            CSV metric tables written by the notebooks
+docs/results/                            CSV metric tables written by the notebook, and runs.csv (runtime and peak GPU memory from the verified run)
 docs/environment.md                      pinned versions and install notes
 ```
 
