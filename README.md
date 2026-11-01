@@ -72,7 +72,7 @@ Open `helene_forecast_comparison_wuduan.ipynb` in JupyterLab and select the **hu
 | helene_forecast_comparison_wuduan.ipynb | 3 min | 32.3 |
 <!-- RUNS:END -->
 
-`helene_forecast_comparison_wuduan.ipynb` runs SFNO and Aurora from the ERA5 state, tracks both with `TCTrackerWuDuan`, and writes the tables above to `docs/results/`.
+`helene_forecast_comparison_wuduan.ipynb` runs SFNO and Aurora from the ERA5 state, tracks both with `TCTrackerWuDuan`, and writes the tables above to `docs/results/` and its figures to `figures/`.
 
 ## Repository layout
 
@@ -81,6 +81,7 @@ helene_forecast_comparison_wuduan.ipynb  Wu–Duan tracker: SFNO and Aurora agai
 metrics.py                               great-circle distance, intensity error and area-weighted grid metrics
 tc_skill.py                              track and lead-hour skill tables
 tests/                                   unit tests for metrics.py and tc_skill.py
+figures/                                 the figures each notebook produces, at full size
 docs/images/                             figures shown in this README
 docs/results/                            CSV metric tables written by the notebook, and runs.csv (runtime and peak GPU memory from the verified run)
 docs/environment.md                      pinned versions and install notes
