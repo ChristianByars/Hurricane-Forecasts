@@ -15,8 +15,8 @@ Position error is the great-circle distance between a model's storm center and t
 <!-- helene_forecast_comparison_wuduan_metrics:START -->
 | Model | Position error, mean (km) | Position error, max (km) | MSLP bias (hPa) | MSLP RMSE (hPa) |
 |---|---|---|---|---|
-| SFNO | 76.10 | 164.90 | 6.39 | 6.87 |
-| Aurora | 42.10 | 65.30 | 7.71 | 8.34 |
+| SFNO | 76.1 | 164.9 | 6.39 | 6.87 |
+| Aurora | 42.1 | 65.3 | 7.71 | 8.34 |
 <!-- helene_forecast_comparison_wuduan_metrics:END -->
 
 **Error by forecast lead hour**
@@ -24,15 +24,15 @@ Position error is the great-circle distance between a model's storm center and t
 <!-- helene_forecast_comparison_wuduan_lead_errors:START -->
 | Lead (h) | SFNO position error (km) | SFNO MSLP error (hPa) | Aurora position error (km) | Aurora MSLP error (hPa) |
 |---|---|---|---|---|
-| 24 | 47.10 | 2.60 | 26.60 | 3.30 |
-| 30 | 73.00 | 3.70 | 32.40 | 3.90 |
-| 36 | 69.50 | 5.90 | 37.30 | 5.60 |
-| 42 | 32.80 | 7.30 | 51.00 | 7.50 |
-| 48 | 39.30 | 7.90 | 45.40 | 8.30 |
-| 54 | 66.00 | 5.20 | 47.30 | 7.10 |
-| 60 | 82.90 | 10.00 | 24.00 | 11.90 |
-| 66 | 109.20 | 4.60 | 49.60 | 8.30 |
-| 72 | 164.90 | 10.30 | 65.30 | 13.60 |
+| 24 | 47.1 | 2.6 | 26.6 | 3.3 |
+| 30 | 73.0 | 3.7 | 32.4 | 3.9 |
+| 36 | 69.5 | 5.9 | 37.3 | 5.6 |
+| 42 | 32.8 | 7.3 | 51.0 | 7.5 |
+| 48 | 39.3 | 7.9 | 45.4 | 8.3 |
+| 54 | 66.0 | 5.2 | 47.3 | 7.1 |
+| 60 | 82.9 | 10.0 | 24.0 | 11.9 |
+| 66 | 109.2 | 4.6 | 49.6 | 8.3 |
+| 72 | 164.9 | 10.3 | 65.3 | 13.6 |
 <!-- helene_forecast_comparison_wuduan_lead_errors:END -->
 
 Leads before the tracker first detects Helene in ERA5 are not scored, which is why the lead-hour table starts at 24 h.
@@ -69,7 +69,7 @@ Open `helene_forecast_comparison_wuduan.ipynb` in JupyterLab and select the **hu
 <!-- RUNS:START -->
 | Notebook | Runtime | Peak GPU memory (GiB) |
 |---|---|---|
-| helene_forecast_comparison_wuduan.ipynb | 3 min | 32.30 |
+| helene_forecast_comparison_wuduan.ipynb | 3 min | 32.3 |
 <!-- RUNS:END -->
 
 `helene_forecast_comparison_wuduan.ipynb` runs SFNO and Aurora from the ERA5 state, tracks both with `TCTrackerWuDuan`, and writes the tables above to `docs/results/`.
