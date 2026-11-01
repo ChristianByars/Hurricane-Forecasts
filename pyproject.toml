@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = "==3.12.*"
 authors = [{ name = "Christian Byars" }]
 dependencies = [
-    "earth2studio[aurora,cyclone,data,graphcast,sfno]==0.20.0",
+    "earth2studio[aurora,cyclone,data,sfno]==0.20.0",
     "torch==2.13.0",
     "cartopy>=0.22.0",
     "gcsfs>=2024.1.0",
@@ -17,7 +17,6 @@ dependencies = [
     "pandas>=2.0.0",
     "pytest>=9.0.3",  # cupy.testing import guard: importing cupy without pytest crashes
     "scipy>=1.10.0",
-    "weathernext",  # not on PyPI: resolved from [tool.uv.sources] (earth2studio[graphcast] needs it; uv ignores a dependency's sources)
     "xarray>=2024.10.0",
     "zarr>=2.18.0",
 ]
@@ -30,7 +29,6 @@ torch = { index = "pytorch-cu132" }
 makani = { git = "https://github.com/NVIDIA/makani.git", rev = "b38fcb2799d7dbc146fa60459f3f9823394a8bf1" }  # same pin as earth2studio 0.20.0
 flash-attn = { path = "wheels/flash_attn-2.8.3-cp312-cp312-linux_x86_64.whl" }
 torch-harmonics = { path = "wheels/torch_harmonics-0.8.1-cp312-cp312-linux_x86_64.whl" }
-weathernext = { git = "https://github.com/google-deepmind/weathernext.git", rev = "9c034db1ff412d5db6cbe6bb0c5c9afc5a267719" }  # same pin as earth2studio 0.20.0
 
 [tool.uv]
 index-strategy = "unsafe-best-match"
