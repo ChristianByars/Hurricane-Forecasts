@@ -1,53 +1,49 @@
 # Hurricane Helene — AI Weather Model Track & Intensity Verification
 
-![Helene 72-hour forecast tracks from GraphCast, SFNO and Aurora compared with the ERA5 track](docs/images/helene_track_72h.png)
+![Helene 72-hour forecast tracks from SFNO and Aurora compared with the ERA5 track](docs/images/helene_wuduan_track_72h.png)
 
-Three AI weather models — Google DeepMind's GraphCast (operational version), NVIDIA's SFNO and Microsoft's Aurora — forecast Hurricane Helene (Florida Big Bend landfall, 2024-09-27) three days ahead, all started from the same ERA5 state. Storm tracks and intensities are extracted from the model fields and scored against ERA5, using [NVIDIA Earth2Studio](https://github.com/NVIDIA/earth2studio).
+*SFNO and Aurora tracks against the ERA5 track. The Wu–Duan tracker detects every storm on the globe, and Helene's path is selected inside a regional box.*
+
+Two AI weather models — NVIDIA's SFNO and Microsoft's Aurora — forecast Hurricane Helene (Florida Big Bend landfall, 2024-09-27) three days ahead, both started from the same ERA5 state. Storm tracks and intensities are extracted from the model fields with the Wu–Duan cyclone tracker in [NVIDIA Earth2Studio](https://github.com/NVIDIA/earth2studio) and scored against ERA5.
 
 ## Results at a glance
 
-Position error is the great-circle distance between a model's storm center and the ERA5 storm center; intensity error is the difference in minimum mean sea level pressure. ERA5 is a 0.25° reanalysis that smooths storm cores, so intensity errors measure agreement with ERA5, not with best-track pressure.
+Position error is the great-circle distance between a model's storm center and the ERA5 storm center. MSLP error is the model's minimum mean sea level pressure minus ERA5's, so a positive MSLP bias means the model's storm is shallower than ERA5's. ERA5 is a 0.25° reanalysis that smooths storm cores, so intensity errors measure agreement with ERA5, not with best-track pressure.
 
-**Vorticity-center tracker: mean errors over the 72 h forecast**
-
-<!-- helene_forecast_comparison_metrics:START -->
-_Filled in after the verified run._
-<!-- helene_forecast_comparison_metrics:END -->
-
-**Vorticity-center tracker: error by lead hour**
-
-<!-- helene_forecast_comparison_lead_errors:START -->
-_Filled in after the verified run._
-<!-- helene_forecast_comparison_lead_errors:END -->
-
-**Wu–Duan tracker (SFNO and Aurora)**
+**Mean errors over the 72 h forecast**
 
 <!-- helene_forecast_comparison_wuduan_metrics:START -->
-_Filled in after the verified run._
+| Model | Position error, mean (km) | Position error, max (km) | MSLP bias (hPa) | MSLP RMSE (hPa) |
+|---|---|---|---|---|
+| SFNO | 76.10 | 164.90 | 6.39 | 6.87 |
+| Aurora | 42.10 | 65.30 | 7.71 | 8.34 |
 <!-- helene_forecast_comparison_wuduan_metrics:END -->
 
-![Minimum mean sea level pressure of each model and ERA5 against forecast lead time](docs/images/helene_intensity_72h.png)
+**Error by forecast lead hour**
 
-*Intensity: minimum mean sea level pressure of each model against ERA5 over the 72 h forecast.*
+<!-- helene_forecast_comparison_wuduan_lead_errors:START -->
+| Lead (h) | SFNO position error (km) | SFNO MSLP error (hPa) | Aurora position error (km) | Aurora MSLP error (hPa) |
+|---|---|---|---|---|
+| 24 | 47.10 | 2.60 | 26.60 | 3.30 |
+| 30 | 73.00 | 3.70 | 32.40 | 3.90 |
+| 36 | 69.50 | 5.90 | 37.30 | 5.60 |
+| 42 | 32.80 | 7.30 | 51.00 | 7.50 |
+| 48 | 39.30 | 7.90 | 45.40 | 8.30 |
+| 54 | 66.00 | 5.20 | 47.30 | 7.10 |
+| 60 | 82.90 | 10.00 | 24.00 | 11.90 |
+| 66 | 109.20 | 4.60 | 49.60 | 8.30 |
+| 72 | 164.90 | 10.30 | 65.30 | 13.60 |
+<!-- helene_forecast_comparison_wuduan_lead_errors:END -->
 
-![Position error of each model against ERA5 by forecast lead time](docs/images/helene_position_error_72h.png)
-
-*Track error: distance between each model's storm center and the ERA5 center at every lead hour.*
-
-![SFNO and Aurora Helene tracks from the Wu–Duan tracker compared with the ERA5 track](docs/images/helene_wuduan_track_72h.png)
-
-*Wu–Duan tracker: SFNO and Aurora tracks against the ERA5 track, selected out of all storms the tracker detects.*
+Leads before the tracker first detects Helene in ERA5 are not scored, which is why the lead-hour table starts at 24 h.
 
 ## Models and data
 
-| Model | Developer | Initial condition | Tracker |
-|---|---|---|---|
-| GraphCast (operational) | Google DeepMind | ERA5 (ARCO), same initial state as the other models | vorticity + MSLP |
-| SFNO | NVIDIA | ERA5 (ARCO) | both trackers |
-| Aurora | Microsoft | ERA5 (ARCO) | both trackers |
-| ERA5 | ECMWF reanalysis | — | reference (tracked by both trackers) |
-
-Earth2Studio asks users to familiarize themselves with the licence restrictions of the GraphCast checkpoints before using them; see the [WeatherNext repository](https://github.com/google-deepmind/weathernext) (where GraphCast is called WeatherNext 1-Graph), the [arXiv paper](https://arxiv.org/abs/2212.12794) and the [Science paper](https://www.science.org/doi/10.1126/science.adi2336).
+| Model | Developer | Initial condition |
+|---|---|---|
+| SFNO | NVIDIA | ERA5 (ARCO) |
+| Aurora | Microsoft | ERA5 (ARCO) |
+| ERA5 | ECMWF reanalysis | — (the reference, tracked the same way) |
 
 ## Quick start
 
@@ -62,24 +58,22 @@ uv run python -m ipykernel install --user --name hurricane-forecasts --display-n
 
 `uv sync` expects a prebuilt torch-harmonics wheel in a `wheels/` folder; see [docs/environment.md](docs/environment.md).
 
-Open a notebook in JupyterLab and select the **hurricane-forecasts** kernel, then run all cells.
+Open `helene_forecast_comparison_wuduan.ipynb` in JupyterLab and select the **hurricane-forecasts** kernel, then run all cells.
 
 ## Notebooks
 
 <!-- RUNS:START -->
-_Runtime and GPU memory are filled in after the verified run._
+| Notebook | Runtime | Peak GPU memory (GiB) |
+|---|---|---|
+| helene_forecast_comparison_wuduan.ipynb | 3 min | 32.30 |
 <!-- RUNS:END -->
 
-| Notebook | Tracker | Models |
-|---|---|---|
-| `helene_forecast_comparison.ipynb` | Vorticity center and minimum MSLP | GraphCast, SFNO, Aurora |
-| `helene_forecast_comparison_wuduan.ipynb` | Wu–Duan tracker (`TCTrackerWuDuan`) | SFNO, Aurora |
+`helene_forecast_comparison_wuduan.ipynb` runs SFNO and Aurora from the ERA5 state, tracks both with `TCTrackerWuDuan`, and writes the tables above to `docs/results/`.
 
 ## Repository layout
 
 ```text
-helene_forecast_comparison.ipynb         vorticity/MSLP tracker: GraphCast, SFNO, Aurora
-helene_forecast_comparison_wuduan.ipynb  Wu–Duan tracker: SFNO, Aurora
+helene_forecast_comparison_wuduan.ipynb  Wu–Duan tracker: SFNO and Aurora against ERA5
 metrics.py                               great-circle distance and intensity-error helpers
 tc_skill.py                              track and lead-hour skill tables
 tests/                                   unit tests for metrics.py and tc_skill.py
