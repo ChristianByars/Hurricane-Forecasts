@@ -51,7 +51,7 @@ Leads before the tracker first detects Helene in ERA5 are not scored, which is w
 
 ## Quick start
 
-Requires Python 3.12, [uv](https://docs.astral.sh/uv/), and an NVIDIA GPU with about 48 GB of VRAM (developed and tested on an L40).
+Requires Python 3.12, [uv](https://docs.astral.sh/uv/), and an NVIDIA GPU (developed and tested on an L40 with 48 GB; the table under *Notebooks* lists each notebook's peak GPU memory).
 
 ```bash
 git clone https://github.com/ChristianByars/Hurricane-Forecasts.git
